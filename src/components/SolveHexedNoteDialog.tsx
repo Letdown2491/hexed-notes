@@ -22,11 +22,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/useToast";
 import { useSolveHexedNote } from '@/hooks/useHexedNotes';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Loader2, EyeOff } from 'lucide-react';
 import type { NostrEvent } from '@nostrify/nostrify';
 
 const formSchema = z.object({
@@ -44,6 +43,7 @@ interface SolveHexedNoteDialogProps {
 export function SolveHexedNoteDialog({ event, trigger, onSolved }: SolveHexedNoteDialogProps) {
   const [open, setOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [decryptedContent, setDecryptedContent] = useState<string | null>(null);
   const { toast } = useToast();
   const { mutate: solveHexedNote, isPending } = useSolveHexedNote();
 
@@ -71,6 +71,7 @@ export function SolveHexedNoteDialog({ event, trigger, onSolved }: SolveHexedNot
             description: "Congratulations! You've decrypted the hexed note.",
           });
           setShowContent(true);
+          setDecryptedContent(decryptedContent);
           onSolved?.(decryptedContent);
           form.reset();
         },
@@ -94,8 +95,17 @@ export function SolveHexedNoteDialog({ event, trigger, onSolved }: SolveHexedNot
     }
   };
 
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (!nextOpen) {
+      setShowContent(false);
+      setDecryptedContent(null);
+      form.reset();
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {trigger || (
           <Button variant="outline" size="sm">
@@ -189,7 +199,7 @@ export function SolveHexedNoteDialog({ event, trigger, onSolved }: SolveHexedNot
                 </Button>
               </div>
               <div className="text-sm text-green-700 whitespace-pre-wrap">
-                {event.content}
+                {decryptedContent}
               </div>
               <div className="mt-2 text-xs text-green-600">
                 This message can only be viewed by those who solve the riddle.

@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useNostr } from '@nostrify/react';
+import { useState } from 'react';
 import { useHexedNotes } from '@/hooks/useHexedNotes';
 import { HexedNoteCard } from '@/components/HexedNoteCard';
 import { CreateHexedNoteDialog } from '@/components/CreateHexedNoteDialog';
@@ -10,33 +8,33 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, Plus, RefreshCw, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 export function HexedNotesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [activeTab, setActiveTab] = useState('public');
-  const { nostr } = useNostr();
   const { toast } = useToast();
+  const { user } = useCurrentUser();
 
   // Fetch public hexed notes
   const { 
     data: publicNotes, 
-    isLoading: isLoadingPublic, 
+    isPending: isLoadingPublic, 
     refetch: refetchPublic 
   } = useHexedNotes();
 
   // Fetch user's own hexed notes
   const { 
     data: myNotes, 
-    isLoading: isLoadingMy, 
+    isPending: isLoadingMy, 
     refetch: refetchMy 
-  } = useHexedNotes();
+  } = useHexedNotes(user?.pubkey);
 
   // Filter notes based on search and difficulty
   const filteredPublicNotes = publicNotes?.filter(note => {
     const matchesSearch = !searchQuery || 
-      note.riddle.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.event.content.toLowerCase().includes(searchQuery.toLowerCase());
+      note.riddle.text.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesDifficulty = selectedDifficulty === 'all' || 
       note.riddle.difficulty === selectedDifficulty;
@@ -46,8 +44,7 @@ export function HexedNotesPage() {
 
   const filteredMyNotes = myNotes?.filter(note => {
     const matchesSearch = !searchQuery || 
-      note.riddle.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.event.content.toLowerCase().includes(searchQuery.toLowerCase());
+      note.riddle.text.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesDifficulty = selectedDifficulty === 'all' || 
       note.riddle.difficulty === selectedDifficulty;
@@ -57,7 +54,9 @@ export function HexedNotesPage() {
 
   const handleRefresh = () => {
     refetchPublic();
-    refetchMy();
+    if (user?.pubkey) {
+      refetchMy();
+    }
     toast({
       title: "Notes Refreshed",
       description: "Hexed notes have been updated from the network.",

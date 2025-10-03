@@ -37,6 +37,7 @@ import { Loader2 } from 'lucide-react';
 const formSchema = z.object({
   content: z.string().min(1, 'Content is required').max(2000, 'Content must be less than 2000 characters'),
   riddle: z.string().min(10, 'Riddle must be at least 10 characters').max(200, 'Riddle must be less than 200 characters'),
+  answer: z.string().min(1, 'Answer is required').max(100, 'Answer must be less than 100 characters'),
   hint: z.string().optional(),
   difficulty: z.enum(['easy', 'medium', 'hard']).default('medium'),
   recipientPubkey: z.string().optional(),
@@ -58,6 +59,7 @@ export function CreateHexedNoteDialog({ trigger }: CreateHexedNoteDialogProps) {
     defaultValues: {
       content: '',
       riddle: '',
+      answer: '',
       hint: '',
       difficulty: 'medium',
       recipientPubkey: '',
@@ -70,6 +72,7 @@ export function CreateHexedNoteDialog({ trigger }: CreateHexedNoteDialogProps) {
         content: data.content,
         riddle: {
           text: data.riddle,
+          answer: data.answer,
           hint: data.hint,
           difficulty: data.difficulty,
         },
@@ -151,6 +154,26 @@ export function CreateHexedNoteDialog({ trigger }: CreateHexedNoteDialogProps) {
                   <FormDescription>
                     The answer to this riddle will be used to decrypt the message.
                     Make it challenging but solvable!
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="answer"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Answer</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="What word or phrase unlocks the spell?"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Only those who enter this exact answer (case-insensitive) can reveal the secret message.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
