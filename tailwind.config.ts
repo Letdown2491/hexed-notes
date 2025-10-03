@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
@@ -21,8 +20,23 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ["Inter Variable", ...fontFamily.sans],
-				display: ["Cinzel Decorative", ...fontFamily.serif],
+				sans: [
+					"Inter Variable",
+					"ui-sans-serif",
+					"system-ui",
+					"-apple-system",
+					"BlinkMacSystemFont",
+					"\"Segoe UI\"",
+					"sans-serif",
+				],
+				display: [
+					"Cinzel Decorative",
+					"ui-serif",
+					"Georgia",
+					"Cambria",
+					"\"Times New Roman\"",
+					"serif",
+				],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
