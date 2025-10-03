@@ -3,11 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SolveHexedNoteDialog } from './SolveHexedNoteDialog';
-import { useHexedNotes } from '@/hooks/useHexedNotes';
 import { useAuthor } from '@/hooks/useAuthor';
 import { genUserName } from '@/lib/genUserName';
 import { formatDistanceToNow } from 'date-fns';
-import { Eye, Lock, Clock, User } from 'lucide-react';
+import { Ghost, Hourglass, MoonStar, Sparkles } from 'lucide-react';
 
 interface HexedNoteCardProps {
   event: any;
@@ -30,10 +29,14 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
 
   const getDifficultyColor = (diff: string) => {
     switch (diff) {
-      case 'easy': return 'bg-green-100 text-green-800 border-green-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'hard': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'easy':
+        return 'bg-gradient-to-r from-emerald-500/30 to-emerald-400/20 text-emerald-200 border-emerald-400/40';
+      case 'medium':
+        return 'bg-gradient-to-r from-amber-500/30 to-orange-400/20 text-orange-200 border-orange-400/40';
+      case 'hard':
+        return 'bg-gradient-to-r from-rose-500/30 to-red-500/20 text-red-200 border-red-500/40';
+      default:
+        return 'bg-slate-800/60 text-slate-200 border-slate-600/60';
     }
   };
 
@@ -44,11 +47,11 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full border border-purple-500/10 bg-slate-950/70 backdrop-blur">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Lock className="h-5 w-5 text-muted-foreground" />
+          <CardTitle className="font-display text-lg flex items-center gap-2">
+            <MoonStar className="h-5 w-5 text-purple-400" />
             Hexed Note
           </CardTitle>
           <Badge className={getDifficultyColor(difficulty)}>
@@ -58,11 +61,11 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
         
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
-            <User className="h-3 w-3" />
+            <Ghost className="h-3 w-3" />
             {userName}
           </div>
           <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
+            <Hourglass className="h-3 w-3" />
             {formatDistanceToNow(new Date(event.created_at * 1000), { addSuffix: true })}
           </div>
           {isPrivate && (
@@ -76,8 +79,8 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
       <CardContent className="space-y-4">
         {/* Riddle Section */}
         <div className="p-4 bg-muted rounded-lg border">
-          <h3 className="font-semibold mb-2 flex items-center gap-2">
-            <Eye className="h-4 w-4" />
+          <h3 className="font-display font-semibold mb-2 flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-purple-300" />
             The Spell
           </h3>
           <p className="text-sm mb-2">{riddleText}</p>
@@ -91,14 +94,14 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
 
         {/* Encrypted Content */}
         {!isDecrypted && (
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-semibold text-blue-800">Encrypted Content</h3>
-              <Badge variant="outline" className="text-blue-600 border-blue-300">
-                Locked
+          <div className="rounded-lg border border-purple-500/20 bg-purple-950/40 p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="font-display font-semibold text-purple-200">Hexed Content</h3>
+              <Badge variant="outline" className="border-purple-500/60 text-purple-200">
+                Hexed
               </Badge>
             </div>
-            <div className="text-sm text-blue-700 font-mono bg-blue-100 p-2 rounded border border-blue-200">
+            <div className="font-mono text-sm text-purple-100 bg-purple-900/50 p-3 rounded border border-purple-500/30">
               [Encrypted - Solve the riddle to unlock]
             </div>
           </div>
@@ -106,14 +109,14 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
 
         {/* Decrypted Content */}
         {isDecrypted && decryptedContent && (
-          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-semibold text-green-800">Revealed Message</h3>
-              <Badge className="bg-green-100 text-green-800 border-green-200">
+          <div className="rounded-lg border border-orange-500/30 bg-orange-950/40 p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="font-display font-semibold text-orange-200">Decoded Message</h3>
+              <Badge className="bg-orange-500/20 text-orange-200 border-orange-500/40">
                 Unlocked
               </Badge>
             </div>
-            <div className="text-sm text-green-700 whitespace-pre-wrap">
+            <div className="text-sm text-orange-100 whitespace-pre-wrap">
               {decryptedContent}
             </div>
           </div>
@@ -130,9 +133,9 @@ export function HexedNoteCard({ event, showSolveButton = true, onSolved }: Hexed
               event={event} 
               onSolved={handleSolved}
               trigger={
-                <Button variant="outline" size="sm">
-                  <Eye className="mr-2 h-4 w-4" />
-                  Cast Spell
+                <Button variant="outline" size="sm" className="inline-flex items-center">
+                  <Sparkles className="h-4 w-4" />{' '}
+                  Lift Hex
                 </Button>
               }
             />
