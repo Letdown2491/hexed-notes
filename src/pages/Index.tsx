@@ -1,62 +1,62 @@
 import { useSeoMeta } from '@unhead/react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreateHexedNoteDialog } from "@/components/CreateHexedNoteDialog";
 import { useNavigate } from 'react-router-dom';
-import { Wand2, Lock, BookOpen, Users } from 'lucide-react';
+import { Sparkles, Shield, MessageSquareCode } from 'lucide-react';
+
+const featureHighlights = [
+  {
+    title: 'Ciphered Stories',
+    description: 'Craft messages that glow with atmosphere and only bloom when the right phrase is whispered.',
+  },
+  {
+    title: 'Mind-First Security',
+    description: 'Swap seed phrases for riddles. Your friends unlock the secret by thinking, not copying.',
+  },
+  {
+    title: 'Relay Native',
+    description: 'Every hexed note lives on Nostr, so your puzzles travel anywhere your audience already is.',
+  },
+];
 
 const Index = () => {
   const navigate = useNavigate();
 
   useSeoMeta({
-    title: 'Hexed Notes - Mystical Messaging',
-    description: 'Create and solve encrypted notes that can only be decrypted by solving riddles. A magical twist on Nostr messaging!',
+    title: 'Hexed Notes — Puzzle-locked Nostr messages',
+    description: 'Compose riddle-protected notes that spark curiosity and only reveal themselves to the clever.',
   });
 
-  const features = [
-    {
-      icon: <Wand2 className="h-8 w-8 text-purple-600" />,
-      title: "Magical Encryption",
-      description: "Messages locked behind mystical riddles that only the worthy can solve."
-    },
-    {
-      icon: <Lock className="h-8 w-8 text-blue-600" />,
-      title: "Puzzle-Based Security",
-      description: "Instead of keys, use your wits to unlock hidden secrets and messages."
-    },
-    {
-      icon: <BookOpen className="h-8 w-8 text-green-600" />,
-      title: "Creative Riddles",
-      description: "Craft unique puzzles and challenges for friends to solve and enjoy."
-    },
-    {
-      icon: <Users className="h-8 w-8 text-orange-600" />,
-      title: "Social Gaming",
-      description: "Turn messaging into a fun, interactive experience for the whole community."
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="container mx-auto px-4 py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mb-6">
-              <Wand2 className="h-10 w-10 text-white" />
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-purple-600/40 blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-indigo-500/30 blur-3xl" />
+        <div className="absolute top-32 right-0 h-56 w-56 rounded-full bg-blue-500/30 blur-3xl" />
+      </div>
+
+      <div className="relative container mx-auto px-4 py-20">
+        <section className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_1fr] lg:items-center">
+          <div className="space-y-10">
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/40 bg-purple-500/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-purple-200">
+              <Sparkles className="h-4 w-4" />
               Hexed Notes
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              Mystical messages locked behind magical riddles. Solve the spell to reveal the secrets within!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </div>
+
+            <div className="space-y-6">
+              <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
+                Send secrets that shimmer behind riddles.
+              </h1>
+              <p className="max-w-xl text-lg text-slate-300">
+                Put a hex on your notes and let your friends cast spells to remove the hex and decode your secret message.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
               <CreateHexedNoteDialog
                 trigger={
-                  <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
-                    <Wand2 className="mr-2 h-5 w-5" />
-                    Create Your First Hexed Note
+                  <Button size="lg" className="h-12 rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-sky-400 px-8 text-base font-medium text-slate-50 shadow-xl shadow-purple-900/30">
+                    Cast a Hexed Note
                   </Button>
                 }
               />
@@ -64,89 +64,59 @@ const Index = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => navigate('/hexed-notes')}
+                className="h-12 rounded-full border-slate-700 bg-slate-900/70 px-8 text-base text-slate-200 backdrop-blur transition hover:border-slate-500"
               >
-                Explore Hexed Notes
+                Browse Hexed Notes
               </Button>
             </div>
+
+            <p className="flex flex-wrap items-center gap-2 text-sm text-slate-400">
+              <Shield className="h-4 w-4 text-slate-500" />
+              <span>
+                Vibed with <a href="https://soapbox.pub/mkstack" className="text-purple-200 underline decoration-dotted underline-offset-4" target="_blank" rel="noreferrer">MKStack</a>
+              </span>
+            </p>
           </div>
-        </div>
 
-        {/* Features Section */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <Card key={index} className="text-center bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="pb-4">
-                <div className="flex justify-center mb-4">
-                  {feature.icon}
+          <div className="relative">
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-purple-500/30 via-purple-500/10 to-transparent blur-3xl" />
+            <div className="relative space-y-6 rounded-3xl border border-white/10 bg-slate-900/60 p-8 backdrop-blur-xl">
+              <header className="flex items-center gap-3">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 text-white shadow-lg">
+                  <MessageSquareCode className="h-6 w-6" />
+                </span>
+                <div>
+                  <p className="text-sm uppercase tracking-[0.2em] text-purple-200">Demo Sigil</p>
+                  <p className="text-lg font-semibold">“Riddle: speak friend and enter.”</p>
                 </div>
-                <CardTitle className="text-xl">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  {feature.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              </header>
 
-        {/* How It Works Section */}
-        <div className="max-w-4xl mx-auto">
-          <Card className="bg-white/90 backdrop-blur-sm dark:bg-gray-800/90 border-0 shadow-xl">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl mb-4">How Hexed Notes Work</CardTitle>
-              <CardDescription className="text-lg">
-                Experience the magic of puzzle-based messaging in three simple steps
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">
-                    1
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Cast the Spell</h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Create your secret message and craft a mystical riddle to protect it.
-                  </p>
+              <div className="space-y-4 rounded-2xl border border-purple-500/40 bg-slate-950/60 p-6 shadow-[0_0_40px_-20px] shadow-purple-500/60">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Encrypted Content</p>
+                <div className="rounded-xl bg-slate-900/80 p-4 font-mono text-sm text-purple-200">
+{`Whoever solves the rune gets the whispered coordinates...
+(Answer: mellon)`}
                 </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">
-                    2
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Share the Riddle</h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Publish your hexed note to the Nostr network for others to discover.
-                  </p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">
-                    3
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Solve the Puzzle</h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Solve the riddle to unlock the hidden message and reveal the secret!
-                  </p>
-                </div>
+                <p className="text-xs text-slate-500">
+                  Every answer is normalized (case + spacing) before unlocking the note.
+                </p>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </div>
+        </section>
 
-        {/* CTA Section */}
-        <div className="text-center mt-16">
-          <h2 className="text-3xl font-bold mb-4">Ready to Start Your Magical Journey?</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join the world of mystical messaging where every note is an adventure waiting to be discovered.
-          </p>
-          <CreateHexedNoteDialog
-            trigger={
-              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
-                Begin Your Magical Adventure
-              </Button>
-            }
-          />
-        </div>
+        <section className="mt-24 grid gap-6 lg:grid-cols-3">
+          {featureHighlights.map((feature) => (
+            <div
+              key={feature.title}
+              className="group relative overflow-hidden rounded-3xl border border-white/5 bg-slate-900/50 p-8 transition hover:border-purple-400/50 hover:shadow-[0_30px_120px_-60px_rgba(168,85,247,0.8)]"
+            >
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-purple-500/20 to-transparent opacity-0 transition group-hover:opacity-100" />
+              <h2 className="text-xl font-semibold text-slate-50">{feature.title}</h2>
+              <p className="mt-4 text-sm text-slate-300">{feature.description}</p>
+            </div>
+          ))}
+        </section>
       </div>
     </div>
   );

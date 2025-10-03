@@ -19,21 +19,22 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="border-b border-white/5 bg-slate-950/80 backdrop-blur supports-[backdrop-filter]:bg-slate-950/60">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Home Link */}
           <div className="flex items-center">
             <Link 
               to="/" 
-              className="flex items-center space-x-2 text-xl font-bold hover:text-primary transition-colors"
+              className="flex items-center space-x-3 text-lg font-semibold text-slate-100 transition hover:text-purple-200"
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-500 to-sky-500 flex items-center justify-center shadow-lg shadow-purple-900/40">
                 <Wand2 className="h-5 w-5 text-white" />
               </div>
-              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Hexed Notes
-              </span>
+              <div className="leading-tight">
+                <span className="block text-xs uppercase tracking-[0.4em] text-purple-200">Hexed</span>
+                <span className="block text-base">Notes</span>
+              </div>
             </Link>
           </div>
 
@@ -43,10 +44,10 @@ export function Navigation() {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`flex items-center space-x-2 px-3 py-2 rounded-full text-sm font-medium transition ${
                   isActive(item.href)
-                    ? 'text-primary bg-primary/10'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    ? 'text-purple-200 bg-purple-500/20'
+                    : 'text-slate-300 hover:text-purple-100 hover:bg-slate-800/80'
                 }`}
               >
                 {item.icon}
@@ -56,7 +57,7 @@ export function Navigation() {
             
             <CreateHexedNoteDialog 
               trigger={
-                <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                <Button size="sm" className="rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-sky-400 text-slate-50 shadow-md shadow-purple-900/40">
                   <Wand2 className="mr-2 h-4 w-4" />
                   Create Note
                 </Button>
@@ -70,7 +71,7 @@ export function Navigation() {
           <div className="md:hidden flex items-center space-x-2">
             <CreateHexedNoteDialog 
               trigger={
-                <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                <Button size="sm" className="rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-sky-400 text-slate-50">
                   <Wand2 className="mr-1 h-4 w-4" />
                   Create
                 </Button>
@@ -89,17 +90,17 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t bg-background">
+          <div className="md:hidden border-t border-white/5 bg-slate-950/95">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigationItems.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-full text-base font-medium transition ${
                     isActive(item.href)
-                      ? 'text-primary bg-primary/10'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                      ? 'text-purple-200 bg-purple-500/20'
+                      : 'text-slate-300 hover:text-purple-100 hover:bg-slate-800/80'
                   }`}
                 >
                   {item.icon}
